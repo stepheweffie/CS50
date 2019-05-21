@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-
+// Caesar's cipher will encrypt letters with a rotation key argument,
+//preserve case, spaces, numbers, and punctuation
 
 int main(int argc, string argv[])
 {
