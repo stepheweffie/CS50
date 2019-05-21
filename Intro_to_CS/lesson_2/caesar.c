@@ -10,10 +10,10 @@ int main(int argc, string argv[])
     //printf("%s\n", argv[1]);
     char* input = argv[1];
     int i_input = strlen(argv[1]);
-    bool broken = true;
-    if (broken)
+    bool running = true;
+    if (running)
     {
-    //printf("broken\n");
+    //printf("running\n");
 
         for (int ii = 0; ii < i_input; ii++)
         {
@@ -21,7 +21,7 @@ int main(int argc, string argv[])
             if (isspace(argv[1][ii]) || isalpha(argv[1][ii]))
             {
                 printf("Usage: ./caesar key\n");
-                //broken = false;
+                //running = false;
                 // Out of loop after one print statement
                 break;
             }
@@ -94,7 +94,7 @@ int main(int argc, string argv[])
                     }
                 }
                 printf("\n");
-                broken = false;
+                running = false;
                 break;
             }
         }
