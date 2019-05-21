@@ -30,6 +30,13 @@ int main(int argc, string argv[])
             //printf("a\n");
             cindex = 97 - argc;
             letter = pt[i] - cindex;
+            if (letter > 25)
+            {   do
+                {
+                    letter %= 26;
+                }
+                while (letter > 25);
+            }
             //ctext[i] = lowers[letter];
             printf("%s", lowers[letter]);
         }
@@ -39,6 +46,13 @@ int main(int argc, string argv[])
             //printf("b\n");
             cindex = 64 - argc;
             letter = pt[i] - cindex;
+            if (letter > 25)
+            {   do
+                {
+                    letter %= 26;
+                }
+                while (letter > 25);
+            }
             //ctext[i] = uppers[letter];
             printf("%s", uppers[letter]);
         }
