@@ -3,24 +3,29 @@
 #include <string.h>
 #include <ctype.h>
 #include <errno.h>
-// Caesar's cipher will encrypt letters with a rotation key argument,
-//preserve case, spaces, numbers, and punctuation
+
+// Caesar's cipher will encrypt letters with a rotation key argument, preserve case, spaces, numbers, and //punctuation
 
 int main(int argc, string argv[])
 {
+    if (argc <= 1 || argc > 2)
+    {
+        printf("Usage: ./caesar key\n");
+        return 1;
+    }
     // Check for usage of argv[1]
-    //printf("%s\n", argv[1]);r
+    //printf("%s\n", argv[1]);
     char* input = argv[1];
     int i_input = strlen(argv[1]);
     int n = 0;
     bool running = true;
     if (running)
     {
-    //printf("running\n");
+    //printf("broken\n");
 
         for (int ii = 0; ii < i_input; ii++)
         {
-            //printf("running cont'd\n");
+            //printf("broken cont'd\n");
             if (isspace(argv[1][ii]) || isalpha(argv[1][ii]))
             {
                 printf("Usage: ./caesar key\n");
@@ -105,3 +110,4 @@ int main(int argc, string argv[])
     }
     return 0;
 }
+
