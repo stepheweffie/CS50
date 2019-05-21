@@ -10,7 +10,9 @@ int main(int argc, string argv[])
     //char first = pt[0];
     int len = strlen(pt);
     int end = len - 1;
-    //int ciphered[len];
+    int key = atoi(argv[1]);
+    //key += 1;
+    //printf("%s\n%i\n", argv[1], key);
     int letter;
     int cindex;
     //char* ctext[len];
@@ -20,32 +22,34 @@ int main(int argc, string argv[])
     char* lowers[26] = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
                        "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
     printf("ciphertext: ");
-    argc -= 1;
+
     for (int i = 0; i <= end ; i++)
     {
         // Encrypt lowercase
-
-        if (pt[i] <= 122 && pt[i] >= 97)
+        if (pt[i] <= 122 && pt[i] >= 96)
         {
-            //printf("a\n");
-            cindex = 97 - argc;
+            //printf("%d %d ", pt[i], i);
+            cindex = 96 - key;
             letter = pt[i] - cindex;
+            printf("%d", letter);
             if (letter > 25)
             {
                 do
                 {
                     letter %= 26;
+                    printf(" %d ", letter);
                 }
                 while (letter > 25);
             }
             //ctext[i] = lowers[letter];
-            printf("%s", lowers[letter]);
+            letter -= 1;
+            printf("%s %i ", lowers[letter], letter);
         }
         // Encrypt uppercase
         else if (pt[i] <= 90 && pt[i] >= 64)
         {
             //printf("b\n");
-            cindex = 64 - argc;
+            cindex = 64 - key;
             letter = pt[i] - cindex;
             if (letter > 25)
             {
@@ -56,6 +60,7 @@ int main(int argc, string argv[])
                 while (letter > 25);
             }
             //ctext[i] = uppers[letter];
+            letter -= 1;
             printf("%s", uppers[letter]);
         }
         // Print other chars as they are
