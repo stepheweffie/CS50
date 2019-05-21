@@ -31,7 +31,8 @@ int main(int argc, string argv[])
             cindex = 97 - argc;
             letter = pt[i] - cindex;
             if (letter > 25)
-            {   do
+            {
+                do
                 {
                     letter %= 26;
                 }
@@ -47,7 +48,8 @@ int main(int argc, string argv[])
             cindex = 64 - argc;
             letter = pt[i] - cindex;
             if (letter > 25)
-            {   do
+            {
+                do
                 {
                     letter %= 26;
                 }
