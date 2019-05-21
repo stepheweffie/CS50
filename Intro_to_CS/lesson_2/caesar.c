@@ -10,6 +10,7 @@ int main(int argc, string argv[])
     //printf("%s\n", argv[1]);
     char* input = argv[1];
     int i_input = strlen(argv[1]);
+    int n = 0;
     bool running = true;
     if (running)
     {
@@ -17,7 +18,7 @@ int main(int argc, string argv[])
 
         for (int ii = 0; ii < i_input; ii++)
         {
-            //printf("broken cont'd\n");
+            //printf("running cont'd\n");
             if (isspace(argv[1][ii]) || isalpha(argv[1][ii]))
             {
                 printf("Usage: ./caesar key\n");
@@ -49,48 +50,49 @@ int main(int argc, string argv[])
 
                 for (int i = 0; i <= end ; i++)
                 {
-                    // Encrypt lowercase
+                    // Encrypt lowercase ASCII
                     if (pt[i] <= 122 && pt[i] >= 96)
                     {
                         //printf("%d %d ", pt[i], i);
                         cindex = 96 - key;
-                        letter = pt[i] - cindex;
-                        //printf("%d", letter);
-                        if (letter > 25)
-                        {
-                            do
-                            {
-                                letter %= 26;
-                                //printf(" %d ", letter);
-                            }
-                            while (letter > 25);
-                        }
-                        //ctext[i] = lowers[letter];
-                        letter -= 1;
-                        printf("%s", lowers[letter]);
+                        n = -1;
                     }
-                    // Encrypt uppercase
+                    // Encrypt uppercase ASCII
                     else if (pt[i] <= 90 && pt[i] >= 64)
                     {
                         //printf("b\n");
                         cindex = 64 - key;
-                        letter = pt[i] - cindex;
-                        if (letter > 25)
-                        {
-                            do
-                            {
-                                letter %= 26;
-                            }
-                            while (letter > 25);
-                        }
-                        //ctext[i] = uppers[letter];
-                        letter -= 1;
-                        printf("%s", uppers[letter]);
+                        n = 1;
                     }
-                    // Print other chars as they are
                     else
                     {
+                        n = 0;
                         printf("%c", pt[i]);
+                    }
+                    if (n == -1 || n == 1)
+                    {
+                        letter = pt[i] - cindex;
+                            if (letter > 25)
+                            {
+                                do
+                                {
+                                    letter %= 26;
+                                }
+                                while (letter > 25);
+                            }
+                        letter -= 1;
+                    }
+                    //
+                    switch (n)
+                    {
+                        case -1:
+                            printf("%s", lowers[letter]);
+                            break;
+                        case 1:
+                            printf("%s", uppers[letter]);
+                            break;
+                        default:
+                            break;
                     }
                 }
                 printf("\n");
