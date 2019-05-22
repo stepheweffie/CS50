@@ -75,33 +75,43 @@ int main(int argc, string argv[])
 
                 for (int i = 0; i <= end ; i++)
                 {
-
+                    // Skip over spaces, digits, and puntuation
                     if (isspace(pt[i]) || isdigit(pt[i]) || ispunct(pt[i]))
                     {
                         printf("%c", pt[i]);
                         j -= 1;
                     }
-
+                    // Check for letters to encipher
                     else if (islower(pt[i]) || isupper(pt[i]))
                     {
                     // Keyword encryption
-                        j ++;
-                        if (j >= i_input)
+                        if (i != j)
                         {
-                            int v = j % i_input;
-                            key = shift(argv[1][v]);
-                            //printf("%i %i ", key, i);
+                            if (j < i_input)
+                            {
+                                key = shift(argv[1][j]);
+                            }
+                            else
+                            {
+                                int vj = j % i_input;
+                                key = shift(argv[1][vj]);
+                            }
                         }
-                        else if (j < i_input)
+                        else if (i == j && i >= i_input)
                         {
-                            key = shift(argv[1][j]);
-                        //printf("%i %i ", key, i);
+                            int vi = i % i_input;
+                            key = shift(argv[1][vi]);
+                        }
+                        else if (i == j && i < i_input)
+                        {
+                            key = shift(argv[1][i]);
                         }
                         // Encipher letter in plaintext
                         char ept = pt[i] + key;
                         // Print cipher
                         printf("%c", ept);
                     }
+                    j ++;
                 }
                 printf("\n");
                 running = false;
