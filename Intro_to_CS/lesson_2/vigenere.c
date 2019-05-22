@@ -70,27 +70,31 @@ int main(int argc, string argv[])
                 int len = strlen(pt);
                 int end = len - 1;
                 int key;
+                int j = 0;
                 printf("ciphertext: ");
 
                 for (int i = 0; i <= end ; i++)
                 {
+
                     if (isspace(pt[i]) || isdigit(pt[i]) || ispunct(pt[i]))
                     {
-                        i = i - 1;
                         printf("%c", pt[i]);
+                        j -= 1;
                     }
+
                     else if (islower(pt[i]) || isupper(pt[i]))
                     {
                     // Keyword encryption
-                        if (i >= i_input)
+                        j ++;
+                        if (j >= i_input)
                         {
-                            int v = i % i_input;
+                            int v = j % i_input;
                             key = shift(argv[1][v]);
                             //printf("%i %i ", key, i);
                         }
-                        else if (i < i_input)
+                        else if (j < i_input)
                         {
-                            key = shift(argv[1][i]);
+                            key = shift(argv[1][j]);
                         //printf("%i %i ", key, i);
                         }
                         // Encipher letter in plaintext
