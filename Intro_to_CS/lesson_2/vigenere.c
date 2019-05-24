@@ -2,42 +2,31 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-
 char* uppers[26] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
                                    "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 char* lowers[26] = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
                                    "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
 
+
 // Vigenere's cipher will encrypt letters with a sequence key of letters with shift values
+
+
 int shift(char c)
 {
-    if (islower(c) || isupper(c))
+    // Convert char to an int value of the cipher
+    int str1 = c;
+    //uppercase
+    if (str1 <= 90 && str1 >= 64)
     {
-        // Obtain index of c from uppers or lowers, compare strings, return index
-        int n;
-        printf("%c ", c);
-        for (n = 0; n < 26; n++)
-        {
-            char * str1 = &c;
-            char * str2 = lowers[n];
-            char * str3 = uppers[n];
-            if (strcmp(str1, str2) == 0)
-            {
-                printf("lwer %s ", lowers[n]);
-                printf(" n %i ", n);
-                return n;
-                //break;
-            }
-            else if (strcmp(str1, str3) == 0)
-            {
-                //printf("%s ", uppers[i]);
-                //printf("%i ", i);
-                return n;
-                //break;
-            }
-        }
+        str1 -= 65;
     }
-    return 0;
+    //lowercase
+    else if (str1 <= 122 && str1 >= 96)
+    {
+        str1 -= 97;
+    }
+    //printf("item %i ", str1);
+    return str1;
 }
 
 
@@ -48,105 +37,91 @@ int main(int argc, string argv[])
         printf("Usage: ./vigenere keyword\n");
         return 1;
     }
-    // Check for usage of argv[1]
-    //printf("%s\n", argv[1]);
     char* input = argv[1];
-
     int i_input = strlen(argv[1]);
-    bool running = true;
-    if (running)
+    for (int ii = 0; ii < i_input; ii++ )
     {
-    //printf("running\n");
-        for (int ii = 0; ii < i_input; ii++)
-        {
-            //Check keyword
-            if (isspace(argv[1][ii]) || isdigit(argv[1][ii]))
+        if (isspace(argv[1][ii]) || isdigit(argv[1][ii]))
             {
                 printf("Usage: ./vigenere keyword\n");
-                //running = false;
                 // Out of loop after one print statement
+                return 1;
                 break;
             }
+    }
+    // Check for usage of argv[1]
+    //printf("%s\n", argv[1]);
+    //Lowercase is difference of +32 uppercase ASCII
+    string pt = get_string("plaintext: ");
+    int len = strlen(pt);
+    int end = len - 1;
+    int key;
+    int j = 0;
+    printf("ciphertext: ");
+    for (int i = 0; i <= end ; i++)
+    {
 
-            else
+        // Skip over spaces, digits, and puntuation
+        //printf("i is %i j is %i ", i, j);
+        if (isspace(pt[i]) || isdigit(pt[i]) || ispunct(pt[i]))
+        {
+            printf("%c", pt[i]);
+            j -= 1;
+            //printf("key %i ", j);
+        }
+        // Check for letters to encipher
+        else if (islower(pt[i]) || isupper(pt[i]))
+        {
+            int crypt_key = shift(pt[i]);
+            //printf("crypt %i ", crypt_key);
+            // Keyword encryption
+            if (i != j)
             {
-                //Lowercase is difference of +32 uppercase ASCII
-                string pt = get_string("plaintext: ");
-                int len = strlen(pt);
-                int end = len - 1;
-                int key;
-                int j = 0;
-                printf("ciphertext: ");
-
-                for (int i = 0; i <= end ; i++)
-
+                if (j < i_input)
                 {
-                    // Skip over spaces, digits, and puntuation
-                    printf("i is %i j is %i ", i, j);
-                    if (isspace(pt[i]) || isdigit(pt[i]) || ispunct(pt[i]))
-                    {
-                        printf("%c", pt[i]);
-                        j -= 1;
-                        printf("key %i ", j);
-                    }
-                    // Check for letters to encipher
-                    else if (islower(pt[i]) || isupper(pt[i]))
-                    {
-                        int crypt_key = shift(pt[i]);
-                        printf("crypt %i ", crypt_key);
-                    // Keyword encryption
-                        if (i != j)
-                        {
-                            if (j < i_input)
-                            {
-                                key = shift(argv[1][j]);
-                                printf("key %i ", key);
-                            }
-                            else
-                            {
-                                int vj = j % i_input;
-                                key = shift(argv[1][vj]);
-                                printf("key %i ", key);
-                            }
-                        }
-                        else if (i == j && i >= i_input)
-                        {
-                            int vi = i % i_input;
-                            printf("vi %i arg %c ", vi, argv[1][vi]);
-                            key = shift(argv[1][vi]);
-                            printf("key %i ", key);
-                        }
-                        else if (i == j && i < i_input)
-                        {
-                            key = shift(input[i]);
-                            printf("baz key %i ", key);
-                        }
-                        // Encipher letter in plaintext
-                        //char ept = pt[i] + key;
-                        // Print cipher
-                        //printf("%c", ept);
-                        int cipher = key;
-                        cipher %= 26;
-                        //cipher += crypt_key;
-                        printf("cipher %i ", cipher);
-                        if (islower(pt[i]))
-                        {
-                            printf("%s ", lowers[cipher]);
-                        }
-                        else if (isupper(pt[i]))
-                        {
-                            printf("%s", uppers[cipher]);
-                        }
-                    }
-                    j ++;
+                    key = shift(argv[1][j]);
+                    //printf("key %i ", key);
                 }
-                printf("\n");
-                running = false;
-                break;
+                else
+                {
+                    int vj = j % i_input;
+                    key = shift(argv[1][vj]);
+                    //printf("key %i ", key);
+                }
+            }
+            else if (i == j && i >= i_input)
+            {
+                int vi = i % i_input;
+                //printf("vi %i arg %c ", vi, argv[1][vi]);
+                key = shift(argv[1][vi]);
+                //printf("key %i ", key);
+            }
+            else if (i == j && i < i_input)
+            {
+                key = shift(argv[1][i]);
+                //printf("baz key %i ", key);
+            }
+            // Encipher letter in plaintext
+            //char ept = pt[i] + key;
+            // Print cipher
+            //printf("%c", ept);
+            int cipher = key;
+            cipher += crypt_key;
+            cipher %= 26;
+            //printf("cipher %i ", cipher);
+            if (islower(pt[i]))
+            {
+                printf("%s", lowers[cipher]);
+            }
+            else if (isupper(pt[i]))
+            {
+                printf("%s", uppers[cipher]);
             }
         }
+        j ++;
     }
-    return 0;
+    printf("\n");
+    //return 0;
 }
 
 
